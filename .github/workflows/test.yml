@@ -1,0 +1,17 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  publish-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: https://gitlab.com/pandemics/demo.git
+      - name: Run action and set output for testing
+        uses: ./
+      - name: Test the output
+        run: ls

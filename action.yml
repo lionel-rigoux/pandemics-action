@@ -1,0 +1,10 @@
+# action.yml
+name: 'Pandemics actions'
+description: 'Publishes a document eith Pandemics'
+inputs:
+  source:
+    description: 'Path to the source document(s)'
+    required: false
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
