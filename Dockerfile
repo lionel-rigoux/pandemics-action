@@ -1,7 +1,5 @@
 FROM docker:dind
 
-RUN apk add bash
-
 RUN mkdir -p /tmpdata
 
 COPY entrypoint.sh /entrypoint.sh
