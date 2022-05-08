@@ -13,5 +13,5 @@ runs:
   image: 'docker://registry.gitlab.com/pandemics/docker'
   entrypoint: "/bin/sh"
   args:
-    - "-c"
-    - "/usr/bin/pandemics publish"
+    - '-c'
+    - '/usr/bin/pandemics publish "${INPUT_SOURCE}"; echo "::set-output name=pandemics-dir::$(dirname \"${INPUT_SOURCE}\")/pandemics"'
