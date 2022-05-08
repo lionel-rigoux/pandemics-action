@@ -3,7 +3,7 @@ name: 'Pandemics actions'
 description: 'Publishes a document with Pandemics'
 inputs:
   source:
-    description: 'Path to the source document(s)'
+    description: 'Path to the source document'
     required: false
 outputs:
   pandemics-dir:
@@ -23,4 +23,4 @@ runs:
       shell: sh
       run: |
         DIR="$(dirname "${INPUT_SOURCE}")/pandemics"
-        echo "::set-output name=pandemics-dir::'${DIR}'"
+        echo "::set-output name=pandemics-dir::${DIR}"
