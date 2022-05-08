@@ -1,6 +1,8 @@
 #!/bin/sh
 
-mkdir -p /tempdata
-cp -r ./* /tempdata/
-exec docker run -v /tempdata:/data/ registry.gitlab.com/pandemics/docker publish "${INPUT_SOURCE}"
-cp -r /tempdata/pandemics ./
+echo "Publishing: ${INPUT_SOURCE}"
+
+docker run -v "${PWD}:/data/:rw" registry.gitlab.com/pandemics/docker publish
+
+DIR="$(dirname "${INPUT_SOURCE}")/pandemics"
+echo "::set-output name=pandemics-dir::${DIR}"

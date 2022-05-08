@@ -5,13 +5,13 @@ on:
   pull_request:
 
 jobs:
-  publish-test:
+  publish-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          repository: https://gitlab.com/pandemics/demo.git
-      - name: Run action and set output for testing
+      - name: Publish
         uses: ./
-      - name: Test the output
-        run: ls
+        with:
+          source: README.md
+      - name: Check
+        run: ls 
