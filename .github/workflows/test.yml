@@ -10,15 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Publish
-        id: pandemics-publish
         uses: ./
         with:
-          source: README.md
-      - name: Check dir
-        run: echo ${{ steps.pandemics-publish.outputs.pandemics-dir }}
-      - name: Check target
-        run: ls pandemics
-      - uses: actions/upload-artifact@v3
-        with:
-          name: pandemics
-          path: ${{steps.pandemics-publish.outputs.pandemics-dir}}
+          artifact-name: publish-check
