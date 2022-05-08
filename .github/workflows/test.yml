@@ -10,8 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Publish
+        id: pandemics-publish
         uses: ./
         with:
           source: README.md
-      - name: Check
-        run: ls pandemics
+      - name: Check target
+        run: ls ${{ steps.pandemics-publish.outputs.pandemics-dir }}

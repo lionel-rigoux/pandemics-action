@@ -8,10 +8,19 @@ inputs:
 outputs:
   pandemics-dir:
     description: 'Path to pandemics folder'
+    value: ${{ steps.set-pandemics-dir.outputs.pandemics-dir }}
+
 runs:
-  using: 'docker'
-  image: 'docker://registry.gitlab.com/pandemics/docker'
-  entrypoint: "/bin/sh"
-  args:
-    - '-c'
-    - '/usr/bin/pandemics publish "${INPUT_SOURCE}"; echo "::set-output name=pandemics-dir::$(dirname \"${INPUT_SOURCE}\")/pandemics"'
+  using: 'composite'
+  steps:
+    - name: Publish
+      uses: 'docker://registry.gitlab.com/pandemics/docker'
+      with:
+        entrypoint: "/bin/sh"
+        args: '-c "/usr/bin/pandemics publish ${INPUT_SOURCE}"'
+    - name: Set output
+      id: set-pandemics-dir
+      shell: sh
+      run: |
+        DIR="$(dirname "${INPUT_SOURCE}")/pandemics"
+        echo "::set-output name=pandemics-dir::'${DIR}'"
