@@ -10,4 +10,8 @@ outputs:
     description: 'Path to pandemics folder'
 runs:
   using: 'docker'
-  image: 'Docker'
+  image: 'docker://registry.gitlab.com/pandemics/docker'
+  entrypoint: "/bin/sh"
+  args:
+    - "-c"
+    - "/usr/bin/pandemics publish"
