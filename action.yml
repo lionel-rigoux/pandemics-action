@@ -24,8 +24,9 @@ runs:
       id: set-pandemics-dir
       shell: sh
       run: |
-        DIR="$(dirname "${{ inputs.source }}")/pandemics"
-        echo "pandemics-dir='${DIR:2}'" >> $GITHUB_OUTPUT
+        DIR="$(dirname -- "$(readlink -f -- "${{ inputs.source }}")")/pandemics"
+        echo "Artifact path set to ${DIR}"
+        echo "pandemics-dir='${DIR}'" >> $GITHUB_OUTPUT
     - name: Check
       shell: bash
       run: "ls ${{ steps.set-pandemics-dir.outputs.pandemics-dir }}"
