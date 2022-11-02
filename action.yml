@@ -13,17 +13,20 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Log
+      run: echo "Publishing ${{ inputs.source }}..."
     - name: Publish
       uses: 'docker://registry.gitlab.com/pandemics/docker'
       with:
-        entrypoint: "/bin/sh"
-        args: '-c "/usr/bin/pandemics publish ${INPUT_SOURCE}"'
+        args: "publish ${{ inputs.source }}"
     - name: Set output
       id: set-pandemics-dir
       shell: sh
       run: |
-        DIR="$(dirname "${INPUT_SOURCE}")/pandemics"
+        DIR="$(dirname "${{ inputs.source }}")/pandemics"
         echo "::set-output name=pandemics-dir::${DIR}"
+    - name: Check
+      run: "ls ${{ steps.set-pandemics-dir.outputs.pandemics-dir }}"
     - uses: actions/upload-artifact@v3
       with:
         name: ${{ inputs.artifact-name }}
