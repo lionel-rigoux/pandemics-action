@@ -34,5 +34,5 @@ runs:
     - uses: actions/upload-artifact@v3
       with:
         name: ${{ inputs.artifact-name }}
-        path: ${{ steps.set-pandemics-dir.outputs.pandemics-dir }}
+        path: ${{ github.workspace }}
         if-no-files-found: error
