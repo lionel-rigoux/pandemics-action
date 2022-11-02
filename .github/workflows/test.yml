@@ -12,4 +12,5 @@ jobs:
       - name: Publish
         uses: ./
         with:
+          source: ./README.md
           artifact-name: publish-check
