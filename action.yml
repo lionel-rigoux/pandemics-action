@@ -25,7 +25,7 @@ runs:
       shell: sh
       run: |
         DIR="$(dirname "${{ inputs.source }}")/pandemics"
-        echo "pandemics-dir='${DIR}'" >> $GITHUB_OUTPUT
+        echo "pandemics-dir='${DIR:2}'" >> $GITHUB_OUTPUT
     - name: Check
       shell: bash
       run: "ls ${{ steps.set-pandemics-dir.outputs.pandemics-dir }}"
@@ -33,3 +33,4 @@ runs:
       with:
         name: ${{ inputs.artifact-name }}
         path: ${{ steps.set-pandemics-dir.outputs.pandemics-dir }}
+        if-no-files-found: error
