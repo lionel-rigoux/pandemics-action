@@ -14,6 +14,7 @@ runs:
   using: 'composite'
   steps:
     - name: Log
+      shell: bash
       run: echo "Publishing ${{ inputs.source }}..."
     - name: Publish
       uses: 'docker://registry.gitlab.com/pandemics/docker'
@@ -26,6 +27,7 @@ runs:
         DIR="$(dirname "${{ inputs.source }}")/pandemics"
         echo "::set-output name=pandemics-dir::${DIR}"
     - name: Check
+      shell: bash
       run: "ls ${{ steps.set-pandemics-dir.outputs.pandemics-dir }}"
     - uses: actions/upload-artifact@v3
       with:
