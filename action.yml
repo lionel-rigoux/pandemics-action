@@ -25,7 +25,7 @@ runs:
       shell: sh
       run: |
         DIR="$(dirname "${{ inputs.source }}")/pandemics"
-        echo "::set-output name=pandemics-dir::${DIR}"
+        echo "pandemics-dir='${DIR}'" >> $GITHUB_OUTPUT
     - name: Check
       shell: bash
       run: "ls ${{ steps.set-pandemics-dir.outputs.pandemics-dir }}"
