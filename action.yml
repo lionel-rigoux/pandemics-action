@@ -4,7 +4,7 @@ description: 'Publishes a document with Pandemics'
 inputs:
   source:
     description: 'Path to the source document'
-    required: false
+    required: true
   artifact-name:
     description: 'Name of the uploaded artifact'
     required: false
