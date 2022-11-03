@@ -10,7 +10,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Publish
+        id: publish
         uses: ./
         with:
           source: ./README.md
           artifact-name: publish-check
+      - uses: actions/upload-artifact@v3
+        with:
+          name: pandemics
+          path: ${{ steps.publish.outputs.artifact-path }}
+          if-no-files-found: error

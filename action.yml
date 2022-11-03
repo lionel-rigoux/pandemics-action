@@ -1,37 +1,32 @@
 # action.yml
 name: 'Pandemics actions'
 description: 'Publishes a document with Pandemics'
+author: 'Lionel Rigoux'
 inputs:
   source:
-    description: 'Path to the source document'
+    description: 'Path to the source document to compile'
     required: true
-  artifact-name:
-    description: 'Name of the uploaded artifact'
-    required: false
-    default: pandemics
+outputs:
+  artifact-path:
+    description: "Path to the folder containing the Pandemics output"
+    value: ${{ steps.prepare-output.outputs.pandemics-dir }}
 
 runs:
   using: 'composite'
   steps:
-    - name: Log
-      shell: bash
-      run: echo "Publishing ${{ inputs.source }}..."
+    - name: Prepare output
+      id: prepare-output
+      shell: sh
+      run: |
+        DIR="$(dirname ${{ inputs.source }})/pandemics"
+        rm -rf ${DIR} 2> /dev/null || true
+        echo "Artifact path set to ${DIR}"
+        echo "pandemicsDir="${DIR}"" >> $GITHUB_OUTPUT
     - name: Publish
       uses: 'docker://registry.gitlab.com/pandemics/docker'
       with:
         args: "publish ${{ inputs.source }}"
-    - name: Set output
-      id: set-pandemics-dir
-      shell: sh
-      run: |
-        DIR="$(dirname ${{ inputs.source }})/pandemics"
-        echo "Artifact path set to ${DIR}"
-        echo "pandemics-dir=${DIR}" >> $GITHUB_OUTPUT
     - name: Check
       shell: bash
-      run: "ls ${{ steps.set-pandemics-dir.outputs.pandemics-dir }}"
-    - uses: actions/upload-artifact@v3
-      with:
-        name: ${{ inputs.artifact-name }}
-        path: ${{ steps.set-pandemics-dir.outputs.pandemics-dir }}
-        if-no-files-found: error
+      run: "ls ${{ steps.prepare-output.outputs.pandemics-dir }}"
+
