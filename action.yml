@@ -16,12 +16,12 @@ runs:
   steps:
     - name: Prepare output
       id: prepare-output
-      shell: sh
+      shell: bash
       run: |
         DIR="$(dirname ${{ inputs.source }})/pandemics"
         rm -rf ${DIR} 2> /dev/null || true
         echo "Artifact path set to ${DIR}"
-        echo "pandemicsDir="${DIR}"" >> $GITHUB_OUTPUT
+        echo "pandemics-dir="${DIR}"" >> $GITHUB_OUTPUT
     - name: Publish
       uses: 'docker://registry.gitlab.com/pandemics/docker'
       with:
